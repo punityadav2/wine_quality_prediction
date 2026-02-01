@@ -134,3 +134,17 @@ dmypy.json
 /config.py
 data
 
+# MLflow experiment tracking
+mlruns/
+
+# DVC local storage
+mystorage/
+
+# Model artifacts and outputs
+artifacts/model_trainer/
+artifacts/model_evaluation/
+artifacts/data_transformation/
+artifacts
+# Logs
+logs/
+.github\workflows\main.yaml

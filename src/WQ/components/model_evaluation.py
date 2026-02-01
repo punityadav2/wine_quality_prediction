@@ -31,8 +31,7 @@ class ModelEvaluation:
         test_x = test_data.drop([self.config.target_column], axis=1)
         test_y = test_data[[self.config.target_column]]
 
-        # Set tracking URI to local mlruns directory
-        mlflow.set_tracking_uri("file:./mlruns")
+        # mlflow.set_tracking_uri("file:./mlruns")
         mlflow.set_registry_uri(self.config.mlflow_uri)
         tracking_url_type_store = urlparse(mlflow.get_tracking_uri()).scheme
 
@@ -54,13 +53,6 @@ class ModelEvaluation:
             mlflow.log_metric("mae", mae)
 
 
-            # Model registry does not work with file store
-            if tracking_url_type_store != "file":
-
-                # Register the model
-                # There are other ways to use the Model Registry, which depends on the use case,
-                # please refer to the doc for more information:
-                # https://mlflow.org/docs/latest/model-registry.html#api-workflow
-                mlflow.sklearn.log_model(model, "model", registered_model_name="ElasticnetModel")
-            else:
-                mlflow.sklearn.log_model(model, "model")
+            # Log model without registration to avoid permission issues
+            # Model registry requires special permissions on Dagshub
+            mlflow.sklearn.log_model(model, "model")

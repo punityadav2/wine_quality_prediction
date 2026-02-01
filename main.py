@@ -1,4 +1,6 @@
 from WQ import logger
+from dotenv import load_dotenv
+load_dotenv()
 from WQ import logger
 from WQ.pipeline.stage_01_data_ingestion import DataIngestionTrainingPipeline
 from WQ.pipeline.stage_02_data_validation import DataValidationTrainingPipeline
