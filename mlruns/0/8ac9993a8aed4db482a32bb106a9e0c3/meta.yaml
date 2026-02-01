@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/punit/Desktop/DS_Projects/Wine_Quality-main/mlruns/0/8ac9993a8aed4db482a32bb106a9e0c3/artifacts
+end_time: 1769862206105
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 8ac9993a8aed4db482a32bb106a9e0c3
+run_name: languid-dove-779
+run_uuid: 8ac9993a8aed4db482a32bb106a9e0c3
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1769862175266
+status: 3
+tags: []
+user_id: punit
