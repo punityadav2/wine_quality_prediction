@@ -35,7 +35,7 @@ jobs:
     - name: Run pipeline stages
       run: |
         echo "Running data ingestion..."
-        python -c "from src.WQ.pipeline.stage_01_data_ingestion import DataIngestionTrainingPipeline; pipeline = DataValidationTrainingPipeline(); DataIngestionTrainingPipeline().main()"
+        python -c "from src.WQ.pipeline.stage_01_data_ingestion import DataIngestionTrainingPipeline; DataIngestionTrainingPipeline().main()"
         echo "Running data validation..."
         python -c "from src.WQ.pipeline.stage_02_data_validation import DataValidationTrainingPipeline; pipeline = DataValidationTrainingPipeline(); pipeline.main()"
         echo "Pipeline validation successful!"

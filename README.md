@@ -1,196 +1,95 @@
-# Wine Quality Prediction with MLFLOW experiments    
-### Predicting wine quality using machine learning techniques and managing the end-to-end workflow with MLFLOW experiments on Dagshub, Deployment via Docker image on AWS EC2
-![Python Version](https://img.shields.io/badge/python-3.11%20%7C%203.10-blue)
-![MLflow Version](https://img.shields.io/badge/MLflow-2.6.0-green)
+# Wine Quality Prediction 🍷
 
-## Introduction
+[![Python 3.10](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/downloads/release/python-3100/)
+[![DVC](https://img.shields.io/badge/Data%20Version%20Control-DVC-9cf)](https://dvc.org/)
+[![MLflow](https://img.shields.io/badge/MLflow-Tracking-blue)](https://mlflow.org/)
+[![Dagshub](https://img.shields.io/badge/Dagshub-Experiment%20Tracking-black)](https://dagshub.com/)
+[![CI Pipeline](https://github.com/punityadav2/wine_quality_prediction/actions/workflows/ci-only.yaml/badge.svg)](https://github.com/punityadav2/wine_quality_prediction/actions)
 
-This project aims to predict the quality of wines using various machine learning algorithms. It utilizes the MLflow platform to manage the end-to-end machine learning lifecycle, including data preprocessing, model training, hyperparameter tuning, and deployment.
+End-to-end Machine Learning pipeline for predicting wine quality. This project demonstrates MLOps best practices including modular coding, DVC for data versioning, MLflow (via Dagshub) for experiment tracking, and CI/CD with GitHub Actions.
 
-## Features
+---
 
-- Data preprocessing pipeline for cleaning and transforming the dataset.
-- Support for multiple machine learning algorithms for wine quality prediction.
-- Hyperparameter tuning using grid search or random search.
-- Tracking and logging experiments with MLflow for easy comparison.
-- REST API endpoint for making predictions using the trained model.
-- Dockerized environment for seamless deployment.
+## 🚀 Key Features
 
+*   **Modular Pipeline**: Split into Data Ingestion, Validation, Transformation, Training, and Evaluation.
+*   **Data Version Control (DVC)**: Large datasets are tracked via DVC (Local storage configured).
+*   **Experiment Tracking**: MLflow integrated with Dagshub for logging metrics, parameters, and models.
+*   **CI/CD**: Automated testing pipeline using GitHub Actions.
+*   **API**: Flask-based web application for real-time predictions.
+*   **Containerization**: Docker support for reproducible deployment.
 
-## Project Structure
-```
-├── data/
-│   ├── wine-quality.csv
-│   └── ...
-├── models/
-│   ├── model.pkl
-│   └── ...
-├── notebooks/
-│   ├── data_exploration.ipynb
-│   ├── model_experimentation.ipynb
-│   └── ...
-├── .gitignore
-├── Dockerfile
-├── preprocess_data.py
-├── train.py
-├── predict_api.py
-└── README.md
-```
+---
 
-## Getting Started
+## 🛠️ Setup & Installation
 
-### STEPS:
-
-Clone the repository
-
+### 1. Clone & Environment
 ```bash
-https://github.com/punityadav2/Wine-Quality
-```
-### STEP 01- Create a conda environment after opening the repository
+git clone https://github.com/punityadav2/wine_quality_prediction.git
+cd wine_quality_prediction
 
-```bash
-conda create -n ml python=3.11 -y
-```
-
-```bash
-conda activate ml
+# Create Virtual Environment
+python -m venv venv
+.\venv\Scripts\Activate.ps1   # PowerShell
+# source venv/bin/activate    # Linux/Mac
 ```
 
-
-### STEP 02- install the requirements
+### 2. Install Dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
-
+### 3. Pull Data (DVC)
+Since the data is versioned with DVC, you need to pull it to your local machine:
 ```bash
-# Finally run the following command
+dvc pull
+```
+
+### 4. Configure Experiment Tracking (Dagshub)
+Create a `.env` file in the root directory:
+```bash
+# .env file content
+MLFLOW_TRACKING_URI=https://dagshub.com/YOUR_USERNAME/wine_quality_prediction.mlflow
+MLFLOW_TRACKING_USERNAME=YOUR_USERNAME
+MLFLOW_TRACKING_PASSWORD=YOUR_DAGSHUB_TOKEN
+```
+
+---
+
+## 🏃‍♂️ Usage
+
+### Run the ML Pipeline
+To execute the full training pipeline (Ingestion -> Evaluation):
+```bash
+python main.py
+```
+
+### Run the Web App
+To start the Flask API and UI:
+```bash
 python app.py
 ```
+Access the app at `http://localhost:8080`
 
-Now,
-```bash
-open up you local host and port
-```
+---
 
-
-
-## MLflow
-
-[Documentation](https://mlflow.org/docs/latest/index.html)
-
-
-##### cmd
-- mlflow ui
-
-### dagshub
-[dagshub](https://dagshub.com/)
-
-MLFLOW_TRACKING_URI=https://dagshub.com/tushar27/Wine_Quality.mlflow \
-MLFLOW_TRACKING_USERNAME=tushar27 \
-MLFLOW_TRACKING_PASSWORD="" \
-python main.py
-
-Run this to export as env variables:
-
-```bash
-
-export MLFLOW_TRACKING_URI=https://dagshub.com/tushar27/Wine_Quality.mlfloww
-
-export MLFLOW_TRACKING_USERNAME=tushar27 
-
-export MLFLOW_TRACKING_PASSWORD=""
+## 🏗️ Project Structure
 
 ```
+├── .github/workflows  # CI/CD Workflows
+├── .dvc/              # DVC Configuration
+├── artifacts/         # DVC tracked files (Data, Models) - Ignored by Git
+├── config/            # Configuration files
+├── src/               # Source code modules
+├── templates/         # HTML templates for Flask
+├── app.py             # Flask Application
+├── main.py            # Main training pipeline entry point
+├── dvc.yaml           # DVC pipeline definition
+└── params.yaml        # Training parameters
+```
 
+---
 
+## ☁️ Deployment
 
-# AWS-CICD-Deployment-with-Github-Actions
-
-## 1. Login to AWS console.
-
-## 2. Create IAM user for deployment
-
-	#with specific access
-
-	1. EC2 access : It is virtual machine
-
-	2. ECR: Elastic Container registry to save your docker image in aws
-
-
-	#Description: About the deployment
-
-	1. Build docker image of the source code
-
-	2. Push your docker image to ECR
-
-	3. Launch Your EC2 
-
-	4. Pull Your image from ECR in EC2
-
-	5. Lauch your docker image in EC2
-
-	#Policy:
-
-	1. AmazonEC2ContainerRegistryFullAccess
-
-	2. AmazonEC2FullAccess
-
-	
-## 3. Create ECR repo to store/save docker image
-    - Save the URI: 566373416292.dkr.ecr.ap-south-1.amazonaws.com/mlproj
-
-	
-## 4. Create EC2 machine (Ubuntu) 
-
-## 5. Open EC2 and Install docker in EC2 Machine:
-	
-	
-	#optinal
-
-	sudo apt-get update -y
-
-	sudo apt-get upgrade
-	
-	#required
-
-	curl -fsSL https://get.docker.com -o get-docker.sh
-
-	sudo sh get-docker.sh
-
-	sudo usermod -aG docker ubuntu
-
-	newgrp docker
-	
-# 6. Configure EC2 as self-hosted runner:
-    setting>actions>runner>new self hosted runner> choose os> then run command one by one
-
-
-# 7. Setup github secrets:
-
-    AWS_ACCESS_KEY_ID=
-
-    AWS_SECRET_ACCESS_KEY=
-
-    AWS_REGION = us-east-1
-
-    AWS_ECR_LOGIN_URI = demo>>  566373416292.dkr.ecr.ap-south-1.amazonaws.com
-
-    ECR_REPOSITORY_NAME = simple-app
-
- 
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
+The project includes a `Dockerfile` and is ready for deployment on platforms like AWS EC2, Azure, or Render. A dedicated AWS deployment workflow is available in `.github/workflows/main.yaml.disabled`.
